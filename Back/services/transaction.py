@@ -9,10 +9,10 @@ def post(json):
     with Session(engine) as session:
         transaction = Transaction(
             id= str(uuid.uuid4()),
-            origem=json.origem,
-            valor=json.valor,
+            origin=json.origin,
+            value=json.value,
             accountId=json.accountId,
-            dia=json.dia
+            day=json.day
         )
         session.add(transaction)
         session.commit()

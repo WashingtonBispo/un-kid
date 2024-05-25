@@ -12,16 +12,16 @@ from .base import Base
 class Classroom(Base):
     __tablename__ = "CLASSROOM"
     id: Mapped[str] = mapped_column(primary_key=True)
-    nome: Mapped[str] = mapped_column(String(30))
-    imagem: Mapped[str] = mapped_column()
+    name: Mapped[str] = mapped_column(String(30))
+    image: Mapped[str] = mapped_column()
     accounts: Mapped[List["Account"]] = relationship(
         back_populates="classroom",
         cascade="all, delete-orphan"
     )
     def __repr__(self) -> str:
-        return f"User(id={self.id!r}, name={self.nome!r}"
+        return f"User(id={self.id!r}, name={self.name!r}"
 
 class ClassroomJSON(BaseModel):
-    nome: str
-    imagem: str
+    name: str
+    image: str
 

@@ -12,9 +12,9 @@ from .base import Base
 class Transaction(Base):
     __tablename__ = "TRANSACTION"
     id: Mapped[str] = mapped_column(String(50), primary_key=True)
-    origem: Mapped[str] = mapped_column(String(60))
-    valor: Mapped[int] = mapped_column()
-    dia: Mapped[datetime] = mapped_column(
+    origin: Mapped[str] = mapped_column(String(60))
+    value: Mapped[int] = mapped_column()
+    day: Mapped[datetime] = mapped_column(
     )
     accountId: Mapped[str] = mapped_column(ForeignKey("ACCOUNT.id"))
     account: Mapped["Account"] = relationship(back_populates="transactions")
@@ -22,7 +22,7 @@ class Transaction(Base):
         return f"id={self.id!r}, Origem={self.origem!r}, Valor={self.valor!r}, Dia={self.dia!r})"
 
 class TransactionJSON(BaseModel):
-    origem: str
-    valor: int
+    origin: str
+    value: int
     accountId: str
-    dia: datetime
+    day: datetime

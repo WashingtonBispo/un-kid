@@ -10,10 +10,10 @@ def post(json):
     with Session(engine) as session:
         account = Account(
             id=str(uuid.uuid4()),
-            nome=json.nome,
-            imagem=json.imagem,
-            meta=json.meta,
-            senha=json.senha,
+            name=json.name,
+            image=json.image,
+            goal=json.goal,
+            password=json.password,
             classroomId=json.classroomId
         )
         session.add(account)

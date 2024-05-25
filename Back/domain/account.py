@@ -12,10 +12,10 @@ from sqlalchemy.inspection import inspect
 class Account(Base):
     __tablename__ = "ACCOUNT"
     id: Mapped[str] = mapped_column(String(50), primary_key=True)
-    nome: Mapped[str] = mapped_column(String(60))
-    imagem: Mapped[str] = mapped_column()
-    meta: Mapped[int] = mapped_column()
-    senha: Mapped[str] = mapped_column(String(12))
+    name: Mapped[str] = mapped_column(String(60))
+    image: Mapped[str] = mapped_column()
+    goal: Mapped[int] = mapped_column()
+    password: Mapped[str] = mapped_column(String(12))
     classroomId: Mapped[str] = mapped_column(ForeignKey("CLASSROOM.id"))
     classroom: Mapped["Classroom"] = relationship(back_populates="accounts")
     transactions: Mapped[List["Transaction"]] = relationship(
@@ -23,11 +23,11 @@ class Account(Base):
         cascade="all, delete-orphan"
     )
     def __repr__(self) -> str:
-        return f"Address(id={self.id!r}, email_address={self.nome!r})"
+        return f"Address(id={self.id!r}, email_address={self.name!r})"
 
 class AccountJSON(BaseModel):
-    nome: str
-    imagem: str
-    meta: int
-    senha: str
+    name: str
+    image: str
+    goal: int
+    password: str
     classroomId: str

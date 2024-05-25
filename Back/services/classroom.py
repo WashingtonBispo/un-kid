@@ -11,8 +11,8 @@ def post(json):
     with Session(engine) as session:
         classroom = Classroom(
             id=str(uuid.uuid4())[:6],
-            nome=json.nome,
-            imagem=json.imagem
+            name=json.name,
+            image=json.image
         )
         session.add(classroom)
         session.commit()
