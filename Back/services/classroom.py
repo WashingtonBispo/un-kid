@@ -3,9 +3,9 @@ from ..domain.classroom import Classroom
 from ..domain.account import Account
 from sqlalchemy.orm import Session
 from sqlalchemy import select
+from fastapi import HTTPException
 import json
 import uuid
-from fastapi import HTTPException
 
 def post(json):
     with Session(engine) as session:
