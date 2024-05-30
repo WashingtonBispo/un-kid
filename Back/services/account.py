@@ -4,6 +4,9 @@ from ..domain.transaction import Transaction
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 from fastapi import HTTPException
+from sqlalchemy.orm import joinedload
+from sqlalchemy import func
+import datetime
 import uuid
 
 def post(json):
@@ -29,11 +32,14 @@ def getAll():
 
 def get(id):
     with Session(engine) as session:
-        query = select(Account).where(Account.id==id).join(Transaction)
-        result = session.scalar(query)
-        if(result==None):
+        query = select(Account, func.sum(Transaction.value).label('sum')).options(joinedload(Account.transactions)).where(Account.id == id).group_by(Account.id)
+        result = session.execute(query).mappings().first()
+
+        if result is None:
             raise HTTPException(status_code=404, detail="Não foi possível encontrar uma conta")
-        account = result.transactions
+        
+        for transaction in result.Account.transactions:
+            transaction.day = transaction.day.strftime('%d/%m/%Y')
         return result
 
 def patch():
