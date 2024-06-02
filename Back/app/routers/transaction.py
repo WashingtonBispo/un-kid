@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from ..services.transaction import post, getAll, get
+from ..services.transaction import post, getAll, get, delete
 from ..domain.transaction import TransactionJSON
 
 router = APIRouter(
@@ -20,3 +20,7 @@ async def getTransactionById(id: str):
 async def postTransaction(json: TransactionJSON):
     response = post(json)
     return response
+
+@router.delete("/{id}",name='Delete Transaction By Id')
+async def deleteTransactionById(id: str):
+    return delete(id)

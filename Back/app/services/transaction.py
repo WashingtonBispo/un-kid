@@ -32,5 +32,14 @@ def get(id):
             raise HTTPException(status_code=404, detail="Não foi possível encontrar a transação")
         return result
 
+def delete(id):
+    with Session(engine) as session:
+        query = select(Transaction).where(Transaction.id==id)
+        result = session.scalar(query)
+        if(result==None):
+            raise HTTPException(status_code=404, detail="Não foi possível encontrar a transação")
+        session.delete(result)
+        session.commit()
+        return 'Success'
 def patch():
     pass
