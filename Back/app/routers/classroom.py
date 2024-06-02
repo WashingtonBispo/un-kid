@@ -12,9 +12,9 @@ router = APIRouter(
 async def read_items():
     return getAll()
 
-@router.get("/{code}", name='Get Classroom By Id')
-async def getClassroom(code: str):
-    return get(code)
+@router.get("/{id}", name='Get Classroom By Id')
+async def getClassroom(id: str):
+    return get(id)
 
 @router.post("/", name='Post Classroom')
 async def postClassroom(json: ClassroomJSON):
