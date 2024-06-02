@@ -3,3 +3,5 @@ sqlalchemy_utils
 pydantic
 psycopg2-binary
 fastapi
+uvicorn
+python-dotenv

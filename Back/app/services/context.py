@@ -18,6 +18,10 @@ from ..domain.account import Account
 from ..domain.classroom import Classroom
 from ..domain.transaction import Transaction
 
+import os
+from dotenv import load_dotenv, dotenv_values 
+load_dotenv() 
+
 engine = None
 
 def get_engine(user, password, host, port, db):
@@ -29,6 +33,6 @@ def get_engine(user, password, host, port, db):
         engine = create_engine(url, pool_size=50, echo=False)
     return engine
 
-engine = get_engine("postgres", "cocota", "localhost", 5432, "tesste")
+engine = get_engine(os.getenv("POSTRES_USER"), os.getenv("POSTGRES_PASSWORD"), os.getenv("POSTGRES_DOCKER"),  os.getenv("POSTGRES_PORT"), os.getenv("POSTGRES_DATABASE"))
 Base.metadata.create_all(engine)
 
