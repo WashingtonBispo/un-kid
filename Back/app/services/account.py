@@ -32,14 +32,21 @@ def getAll():
 
 def get(id):
     with Session(engine) as session:
-        query = select(Account, func.sum(Transaction.value).label('sum')).options(joinedload(Account.transactions)).where(Account.id == id).group_by(Account.id)
+        query = (
+            select(Account, func.sum(Transaction.value).label('sum'))
+            .outerjoin(Account.transactions)
+            .where(Account.id == id)
+            .group_by(Account.id)
+            .options(joinedload(Account.transactions))
+        )
         result = session.execute(query).mappings().first()
 
         if result is None:
             raise HTTPException(status_code=404, detail="Não foi possível encontrar uma conta")
-        
-        for transaction in result.Account.transactions:
-            transaction.day = transaction.day.strftime('%d/%m/%Y')
+        if result.Account.transactions:
+            for transaction in result.Account.transactions:
+                transaction.day = transaction.day.strftime('%d/%m/%Y')
+
         return result
 
 def patch():
